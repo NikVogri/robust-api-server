@@ -7,10 +7,10 @@ export class Redis {
     client: IORedis;
 
     constructor(private logger: Logger) {
-        this.client = new IORedis({
+        this.client = new IORedis(process.env.REDIS_DB_CONNECTION_STR!, {
             maxRetriesPerRequest: null,
         });
 
-        logger.info('Successfully connected to Redis');
+        this.logger.info('Successfully connected to Redis');
     }
 }
