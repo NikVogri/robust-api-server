@@ -13,8 +13,8 @@
         "check": "npm run check-tsc && npm run check-lint"
     },
     "keywords": [],
-    "author": "",
-    "license": "ISC",
+    "author": "Nik Vogrinec",
+    "license": "MIT",
     "dependencies": {
         "bullmq": "^5.1.9",
         "express": "^4.18.2",

@@ -1,0 +1,9 @@
+GET http://localhost:3001/status
+
+###
+
+GET http://localhost:3001/cats
+
+###
+
+GET http://localhost:3001/cats/1
