@@ -6,4 +6,4 @@ GET http://localhost:3001/cats
 
 ###
 
-GET http://localhost:3001/cats/1
+GET http://localhost:3001/cats/3
