@@ -10,13 +10,15 @@ export class Logger {
     private custom = {
         levels: {
             error: 0,
-            info: 2,
-            http: 3,
+            info: 1,
+            http: 2,
+            verbose: 3,
         },
         colors: {
             error: 'red',
             info: 'yellow',
             http: 'gray',
+            verbose: 'gray',
         },
     };
 
@@ -34,19 +36,12 @@ export class Logger {
         return [
             // Logs appear in STDOUT
             new winston.transports.Console({
-                level: 'http',
-                format: winston.format.combine(winston.format.simple(), winston.format.colorize({ all: true })),
-            }),
-            new winston.transports.Console({
-                level: 'info',
-                format: winston.format.combine(winston.format.simple(), winston.format.colorize({ all: true })),
-            }),
-            new winston.transports.Console({
-                level: 'error',
+                level: 'verbose',
                 format: winston.format.combine(
-                    // winston.format.timestamp(), TODO: add timestamp
-                    // TODO: make sure error only gets logged once! remove default transports for error?
-                    winston.format.json(),
+                    winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+                    winston.format.printf(
+                        (i) => `${i.level} ${i.timestamp}: ${i.message} ${JSON.stringify(i.stack) ?? ''}`,
+                    ),
                     winston.format.colorize({ all: true }),
                 ),
             }),
