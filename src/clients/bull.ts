@@ -18,7 +18,7 @@ export class Bull {
         this.queues = this.createQueues();
         this.createWorkers();
 
-        logger.info('Successfully initiated Bull queues and workers');
+        this.logger.info('Successfully initiated Bull queues and workers');
     }
 
     private createQueues(): BullQueues {

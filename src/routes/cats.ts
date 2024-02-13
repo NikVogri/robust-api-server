@@ -1,30 +1,19 @@
 import express from 'express';
 import { withErrorHandling } from '../middleware/withCatch';
-import { CatsService } from '../services/cats';
 import Container from 'typedi';
+import { CatsController } from '../controllers/cats';
 
 const catsRouter = express.Router();
+const catsController = Container.get(CatsController);
 
 catsRouter.get(
     '/cats',
-    withErrorHandling(async (_, res) => {
-        const catsService = Container.get(CatsService);
-
-        const cats = await catsService.getAll();
-        res.status(200).send(cats);
-    }),
+    withErrorHandling((req, res) => catsController.getAll(req, res)),
 );
 
 catsRouter.get(
     '/cats/:id',
-    withErrorHandling(async (req, res) => {
-        const catsService = Container.get(CatsService);
-
-        const id = req.params.id;
-        const cat = await catsService.getById(id);
-
-        res.status(200).send(cat);
-    }),
+    withErrorHandling((req, res) => catsController.getById(req, res)),
 );
 
 export { catsRouter };
