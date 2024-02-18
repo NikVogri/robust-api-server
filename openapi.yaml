@@ -1,0 +1,84 @@
+openapi: 3.0.0
+info:
+    title: Cats API
+    description: A simple cats API!
+    version: 0.0.1
+servers:
+    - url: http://localhost:3001
+      description: Local development server
+paths:
+    /cats:
+        get:
+            operationId: getCats
+            summary: Returns a list of cats.
+            security: []
+            responses:
+                '200':
+                    description: Returned a cats list
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Cat'
+        post:
+            operationId: createCat
+            summary: Create a new cat.
+            security: []
+            responses:
+                '200':
+                    description: Created a new cat.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Cat'
+    /cats/{id}:
+        get:
+            operationId: getCatById
+            summary: Returns a cat.
+            security: []
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: number
+            responses:
+                '200':
+                    description: Returned a single cat.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Cat'
+                '404':
+                    description: Cat not found
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Error'
+components:
+    schemas:
+        Error:
+            type: object
+            properties:
+                message:
+                    type: string
+        Cat:
+            type: object
+            required:
+                - name
+                - date_of_birth
+                - color
+                - created_at
+                - updated_at
+            properties:
+                name:
+                    type: string
+                date_of_birth:
+                    type: string
+                color:
+                    type: string
+                created_at:
+                    type: string
+                updated_at:
+                    type: string
