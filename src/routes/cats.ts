@@ -1,19 +1,43 @@
 import express from 'express';
 import { withErrorHandling } from '../middleware/withCatch';
-import Container from 'typedi';
-import { CatsController } from '../controllers/cats';
+import { container } from 'tsyringe';
+import { withValidate } from '../middleware/withValidate';
+import { createCatSchema } from './cats.dto';
+import { CatsService } from '../services/cats';
 
 const catsRouter = express.Router();
-const catsController = Container.get(CatsController);
 
 catsRouter.get(
     '/cats',
-    withErrorHandling((req, res) => catsController.getAll(req, res)),
+    withErrorHandling(async (_, res) => {
+        const catsService = container.resolve(CatsService);
+
+        const cats = await catsService.getAll();
+        res.status(200).send(cats);
+    }),
 );
 
 catsRouter.get(
     '/cats/:id',
-    withErrorHandling((req, res) => catsController.getById(req, res)),
+    withErrorHandling(async (req, res) => {
+        const catsService = container.resolve(CatsService);
+
+        const id = req.params.id;
+        const cat = await catsService.getById(id);
+
+        res.status(200).send(cat);
+    }),
+);
+
+catsRouter.post(
+    '/cats',
+    withValidate({ body: createCatSchema }),
+    withErrorHandling(async (req, res) => {
+        const catsService = container.resolve(CatsService);
+
+        const cat = await catsService.createCat(req.body);
+        res.status(201).send(cat);
+    }),
 );
 
 export { catsRouter };

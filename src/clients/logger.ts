@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
-import { Service } from 'typedi';
 import winston from 'winston';
 import { AppError } from '../error/AppError';
+import { singleton } from 'tsyringe';
 
-@Service()
+@singleton()
 export class Logger {
-    private logger: winston.Logger;
+    private readonly logger: winston.Logger;
 
-    private custom = {
+    private readonly custom = {
         levels: {
             error: 0,
             info: 1,
@@ -64,7 +64,6 @@ export class Logger {
     private buildHttpLog(req: Request, res: Response, error?: AppError): string {
         return JSON.stringify({
             success: res.statusCode.toString().startsWith('2'), // success status codes are 2xx
-            url: req.url,
             originalUrl: req.originalUrl,
             path: `${req.method} ${req.url}`,
             // TODO: Can also add auth fields in the future
@@ -76,8 +75,9 @@ export class Logger {
                 userAgent: req.headers['user-agent'],
             },
             req: {
-                query: req.query,
-                body: req.body ? Object.keys(req.body) : undefined,
+                query: Object.keys(req.query).length > 0 ? req.query : undefined,
+                params: Object.keys(req.params).length > 0 ? req.params : undefined,
+                body: Object.keys(req.body).length > 0 ? Object.keys(req.body) : undefined,
                 // do not log request inputs as they might be too large or contain GDPR data
             },
             res: {

@@ -1,0 +1,34 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Test CatsService > should fail fetching a single cat because it doesn't exist 1`] = `
+[
+  "1",
+]
+`;
+
+exports[`Test CatsService > should fail fetching a single cat because it doesn't exist 2`] = `[Error: Cat does not exist :(]`;
+
+exports[`Test CatsService > should fetch a single cat and pet it 1`] = `
+[
+  "1",
+]
+`;
+
+exports[`Test CatsService > should fetch a single cat and pet it 2`] = `
+[
+  "pet-cat",
+  {
+    "name": "Jake",
+  },
+]
+`;
+
+exports[`Test CatsService > should fetch a single cat and pet it 3`] = `
+{
+  "name": "Jake",
+}
+`;
+
+exports[`Test CatsService > should fetch all the cats 1`] = `[]`;
+
+exports[`Test CatsService > should fetch all the cats 2`] = `[]`;

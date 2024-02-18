@@ -6,4 +6,15 @@ GET http://localhost:3001/cats
 
 ###
 
-GET http://localhost:3001/cats/3
+GET http://localhost:3001/cats/1
+
+###
+
+POST http://localhost:3001/cats
+Content-Type: application/json
+
+{
+    "name": "Bob",
+    "color": "brown",
+    "dateOfBirth": "2024-01-01"
+}

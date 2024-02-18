@@ -11,12 +11,12 @@ export abstract class Model<T> {
         return rows;
     }
 
-    async getById(id: string): Promise<T> {
+    async getById(id: string): Promise<T | undefined> {
         const { rows } = await this.db.pool.query(`SELECT * FROM ${this.table} WHERE id = $1`, [id]);
         return rows[0];
     }
 
     async delete(id: string): Promise<void> {
-        await this.db.pool.query(`DELETE FROM ${this.table} WHERE id = $2`, [id]);
+        await this.db.pool.query(`DELETE FROM ${this.table} WHERE id = $1`, [id]);
     }
 }

@@ -1,0 +1,15 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Test catPetterWorker > should pet the cat 1`] = `
+[
+  "Started to pet a cat Bob",
+]
+`;
+
+exports[`Test catPetterWorker > should pet the cat 2`] = `
+[
+  "Completed petting cat Bob",
+]
+`;
+
+exports[`Test catPetterWorker > should pet the cat 3`] = `true`;

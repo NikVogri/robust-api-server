@@ -1,15 +1,15 @@
 import { Queue, Worker } from 'bullmq';
 import { Redis } from './redis';
-import { Service } from 'typedi';
 import { catPetterWorker } from '../workers/catPetterWorker';
 import { Logger } from './logger';
+import { singleton } from 'tsyringe';
 
 type QueueName = 'catPetterQueue';
 type BullQueues = Record<QueueName, Queue<unknown, unknown, string>>;
 
-@Service()
+@singleton()
 export class Bull {
-    queues: BullQueues;
+    readonly queues: BullQueues;
 
     constructor(
         private redis: Redis,

@@ -1,16 +1,19 @@
 import { Redis as IORedis } from 'ioredis';
-import { Service } from 'typedi';
 import { Logger } from './logger';
+import { singleton } from 'tsyringe';
 
-@Service()
+@singleton()
 export class Redis {
-    client: IORedis;
+    readonly client: IORedis;
 
     constructor(private logger: Logger) {
         this.client = new IORedis(process.env.REDIS_DB_CONNECTION_STR!, {
             maxRetriesPerRequest: null,
         });
+    }
 
+    async testConnection(): Promise<void> {
+        await this.client.ping();
         this.logger.info('Successfully connected to Redis');
     }
 }

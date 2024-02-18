@@ -1,10 +1,10 @@
 import { Pool } from 'pg';
-import { Service } from 'typedi';
 import { Logger } from './logger';
+import { singleton } from 'tsyringe';
 
-@Service()
+@singleton()
 export class Postgres {
-    public pool: Pool;
+    readonly pool: Pool;
 
     constructor(private logger: Logger) {
         this.pool = new Pool({
@@ -12,13 +12,12 @@ export class Postgres {
         });
     }
 
-    async connect() {
-        const conn = await this.pool.connect();
+    async testConnection(): Promise<void> {
+        await this.pool.query('SELECT 1 + 1;');
+        this.logger.info('Successfully connected to Postgres');
+    }
 
-        // Test connection
-        await conn.query('SELECT 1 + 1');
-
-        this.logger.info('Successfully connected to the database');
-        return conn;
+    async getClient() {
+        return await this.pool.connect();
     }
 }

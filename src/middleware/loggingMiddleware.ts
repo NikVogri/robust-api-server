@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import Container from 'typedi';
 import { Logger } from '../clients/logger';
+import { container } from 'tsyringe';
 
 export const loggingMiddleware = (req: Request, res: Response, next: NextFunction) => {
-    const logger = Container.get(Logger);
+    const logger = container.resolve(Logger);
     const end = res.end;
 
     // @ts-expect-error - overriding the res.end function which gets called last

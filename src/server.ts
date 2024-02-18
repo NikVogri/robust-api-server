@@ -3,10 +3,10 @@ import { catsRouter } from './routes/cats';
 import { errorMiddleware } from './middleware/errorMiddleware';
 import { loggingMiddleware } from './middleware/loggingMiddleware';
 import { Logger } from './clients/logger';
-import Container from 'typedi';
+import { container } from 'tsyringe';
 
 export const startApiServer = () => {
-    const logger = Container.get(Logger);
+    const logger = container.resolve(Logger);
     const app = express();
 
     // Set middleware
@@ -27,5 +27,5 @@ export const startApiServer = () => {
     app.use(errorMiddleware);
 
     const PORT = process.env.PORT;
-    app.listen(PORT, () => logger.info('Server started listening on port ' + PORT));
+    return app.listen(PORT, () => logger.info('Server started listening on port ' + PORT));
 };

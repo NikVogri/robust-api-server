@@ -1,10 +1,11 @@
-import { Service } from 'typedi';
 import { Cat } from '../models/types';
 import { AppError } from '../error/AppError';
 import { Bull } from '../clients/bull';
 import { CatsModel } from '../models/cats';
+import { injectable } from 'tsyringe';
+import { CreateCatDto } from '../routes/cats.dto';
 
-@Service()
+@injectable()
 export class CatsService {
     constructor(
         private catsModel: CatsModel,
@@ -29,6 +30,11 @@ export class CatsService {
         // don't forget to pet the cat
         await this.bull.queues.catPetterQueue.add('pet-cat', { name: cat.name });
 
+        return cat;
+    }
+
+    async createCat(createCatDto: CreateCatDto): Promise<Cat> {
+        const cat = await this.catsModel.create(createCatDto);
         return cat;
     }
 }

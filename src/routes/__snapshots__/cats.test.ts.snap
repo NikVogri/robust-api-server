@@ -1,0 +1,123 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Test cats routes > GET /cats - successfully fetch all records 1`] = `
+[
+  "SELECT * FROM cats",
+]
+`;
+
+exports[`Test cats routes > GET /cats - successfully fetch all records 2`] = `
+[
+  {
+    "id": 1,
+  },
+  {
+    "id": 2,
+  },
+]
+`;
+
+exports[`Test cats routes > GET /cats/:id - fail due to record not found 1`] = `
+[
+  "SELECT * FROM cats WHERE id = $1",
+  [
+    "100",
+  ],
+]
+`;
+
+exports[`Test cats routes > GET /cats/:id - fail due to record not found 2`] = `
+{
+  "message": "Cat does not exist :(",
+}
+`;
+
+exports[`Test cats routes > GET /cats/:id - successfully fetch an existing record 1`] = `
+[
+  "SELECT * FROM cats WHERE id = $1",
+  [
+    "1",
+  ],
+]
+`;
+
+exports[`Test cats routes > GET /cats/:id - successfully fetch an existing record 2`] = `
+{
+  "id": 1,
+}
+`;
+
+exports[`Test cats routes > POST /cats - fail due to input validation error 1`] = `
+{
+  "errors": {
+    "body": [
+      {
+        "code": "invalid_type",
+        "expected": "string",
+        "message": "Required",
+        "path": [
+          "name",
+        ],
+        "received": "undefined",
+      },
+      {
+        "code": "invalid_type",
+        "expected": "string",
+        "message": "Required",
+        "path": [
+          "dateOfBirth",
+        ],
+        "received": "undefined",
+      },
+      {
+        "code": "invalid_type",
+        "expected": "string",
+        "message": "Required",
+        "path": [
+          "color",
+        ],
+        "received": "undefined",
+      },
+    ],
+  },
+  "message": "Invalid payload",
+}
+`;
+
+exports[`Test cats routes > POST /cats - fail due to input validation error 2`] = `
+{
+  "errors": {
+    "body": [
+      {
+        "code": "invalid_string",
+        "message": "Invalid",
+        "path": [
+          "dateOfBirth",
+        ],
+        "validation": "regex",
+      },
+    ],
+  },
+  "message": "Invalid payload",
+}
+`;
+
+exports[`Test cats routes > POST /cats - successfully create a cat 1`] = `
+[
+  "
+                INSERT INTO cats (name, date_of_birth, color)
+                VALUES ($1, $2, $3)
+                ",
+  [
+    "Kitty-kat",
+    "1990-01-01",
+    "orange",
+  ],
+]
+`;
+
+exports[`Test cats routes > POST /cats - successfully create a cat 2`] = `
+{
+  "id": 1,
+}
+`;
