@@ -14,7 +14,7 @@ vi.mock('../clients/logger', () => {
 vi.mock('../clients/postgres');
 vi.mock('../clients/redis');
 vi.mock('../clients/bull');
-vi.mock('../models/cats');
+vi.mock('../repositories/cats');
 
 describe('Test catPetterWorker', () => {
     container.registerInstance(Logger, new Logger());

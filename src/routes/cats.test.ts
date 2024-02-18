@@ -4,12 +4,12 @@ import { Server } from 'http';
 import { startApiServer } from '../server';
 import { CatsService } from '../services/cats';
 import { Bull } from '../clients/bull';
-import { CatsModel } from '../models/cats';
+import { CatsRepository } from '../repositories/cats';
 import { container } from 'tsyringe';
 import { Postgres } from '../clients/postgres';
 import { Logger } from '../clients/logger';
 import { Redis } from '../clients/redis';
-import { Cat } from '../models/types';
+import { CatDBItem } from '../models';
 
 vi.mock('../clients/logger');
 vi.mock('../clients/bull', () => {
@@ -42,8 +42,11 @@ describe('Test cats routes', () => {
         container.registerInstance(Postgres, new Postgres(container.resolve(Logger)));
         container.registerInstance(Redis, new Redis(container.resolve(Logger)));
         container.registerInstance(Bull, new Bull(container.resolve(Redis), container.resolve(Logger)));
-        container.registerInstance(CatsModel, new CatsModel(container.resolve(Postgres)));
-        container.registerInstance(CatsService, new CatsService(container.resolve(CatsModel), container.resolve(Bull)));
+        container.registerInstance(CatsRepository, new CatsRepository(container.resolve(Postgres)));
+        container.registerInstance(
+            CatsService,
+            new CatsService(container.resolve(CatsRepository), container.resolve(Bull)),
+        );
 
         app = startApiServer();
     });
@@ -114,7 +117,7 @@ describe('Test cats routes', () => {
 
         vi.spyOn(container.resolve(Postgres).pool, 'query').mockImplementationOnce(async (...args) => {
             expect(args).toMatchSnapshot();
-            return Promise.resolve({ rows: [{ id: 1 } as Cat] });
+            return Promise.resolve({ rows: [{ id: 1 } as CatDBItem] });
         });
 
         const res = await supertest(app).post('/cats').send(cat);

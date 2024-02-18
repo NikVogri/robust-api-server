@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { Postgres } from '../clients/postgres';
 import { Logger } from '../clients/logger';
-import { Model } from './base';
+import { Repository } from './repository';
 
 vi.mock('../clients/logger');
 vi.mock('../clients/postgres', () => {
@@ -14,17 +14,17 @@ vi.mock('../clients/postgres', () => {
     };
 });
 
-class TestModel extends Model<{ id: string }> {
+class TestRepo extends Repository<{ id: string }> {
     constructor(db: Postgres) {
         super('table-name', db);
     }
 }
 
-describe('Test abstract Model', () => {
+describe('Test abstract Repository', () => {
     const logger = new Logger();
     const db = new Postgres(logger);
 
-    const testModel = new TestModel(db);
+    const testRepo = new TestRepo(db);
 
     it('should get all the records for table', async () => {
         expect.assertions(2);
@@ -36,7 +36,7 @@ describe('Test abstract Model', () => {
             });
         });
 
-        const res = await testModel.getAll();
+        const res = await testRepo.getAll();
         expect(res).toMatchSnapshot();
     });
 
@@ -50,7 +50,7 @@ describe('Test abstract Model', () => {
             });
         });
 
-        const res = await testModel.getById('1');
+        const res = await testRepo.getById('1');
         expect(res).toMatchSnapshot();
     });
 
@@ -62,7 +62,7 @@ describe('Test abstract Model', () => {
             return Promise.resolve();
         });
 
-        const res = await testModel.delete('1');
+        const res = await testRepo.delete('1');
         expect(res).toMatchSnapshot();
     });
 });

@@ -1,0 +1,44 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Test abstract Repository > should delete records by id 1`] = `
+[
+  "DELETE FROM table-name WHERE id = $1",
+  [
+    "1",
+  ],
+]
+`;
+
+exports[`Test abstract Repository > should delete records by id 2`] = `undefined`;
+
+exports[`Test abstract Repository > should get all the records for table 1`] = `
+[
+  "SELECT * FROM table-name",
+]
+`;
+
+exports[`Test abstract Repository > should get all the records for table 2`] = `
+[
+  {
+    "id": 1,
+  },
+  {
+    "id": 2,
+  },
+]
+`;
+
+exports[`Test abstract Repository > should get records by id 1`] = `
+[
+  "SELECT * FROM table-name WHERE id = $1",
+  [
+    "1",
+  ],
+]
+`;
+
+exports[`Test abstract Repository > should get records by id 2`] = `
+{
+  "id": 1,
+}
+`;

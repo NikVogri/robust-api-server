@@ -1,24 +1,24 @@
-import { Cat } from '../models/types';
+import { CatDBItem } from '../models';
 import { AppError } from '../error/AppError';
 import { Bull } from '../clients/bull';
-import { CatsModel } from '../models/cats';
+import { CatsRepository } from '../repositories/cats';
 import { injectable } from 'tsyringe';
 import { CreateCatDto } from '../routes/cats.dto';
 
 @injectable()
 export class CatsService {
     constructor(
-        private catsModel: CatsModel,
+        private catsRepo: CatsRepository,
         private bull: Bull,
     ) {}
 
-    async getAll(): Promise<Cat[]> {
-        const cats = await this.catsModel.getAll();
+    async getAll(): Promise<CatDBItem[]> {
+        const cats = await this.catsRepo.getAll();
         return cats;
     }
 
-    async getById(id: string): Promise<Cat> {
-        const cat = await this.catsModel.getById(id);
+    async getById(id: string): Promise<CatDBItem> {
+        const cat = await this.catsRepo.getById(id);
 
         if (!cat) {
             throw new AppError({
@@ -33,8 +33,8 @@ export class CatsService {
         return cat;
     }
 
-    async createCat(createCatDto: CreateCatDto): Promise<Cat> {
-        const cat = await this.catsModel.create(createCatDto);
+    async createCat(createCatDto: CreateCatDto): Promise<CatDBItem> {
+        const cat = await this.catsRepo.create(createCatDto);
         return cat;
     }
 }

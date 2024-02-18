@@ -1,6 +1,6 @@
 import { Postgres } from '../clients/postgres';
 
-export abstract class Model<T> {
+export abstract class Repository<T> {
     constructor(
         protected table: string,
         protected db: Postgres,

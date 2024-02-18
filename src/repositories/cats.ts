@@ -1,16 +1,16 @@
-import { Model } from './base';
-import { Cat } from './types';
+import { Repository } from './repository';
+import { CatDBItem } from '../models';
 import { Postgres } from '../clients/postgres';
 import { injectable } from 'tsyringe';
 import { CreateCatDto } from '../routes/cats.dto';
 
 @injectable()
-export class CatsModel extends Model<Cat> {
+export class CatsRepository extends Repository<CatDBItem> {
     constructor(db: Postgres) {
         super('cats', db);
     }
 
-    async create(createCatDto: CreateCatDto): Promise<Cat> {
+    async create(createCatDto: CreateCatDto): Promise<CatDBItem> {
         const { rows } = await this.db.pool.query(
             `
                 INSERT INTO cats (name, date_of_birth, color)

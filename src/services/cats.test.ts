@@ -1,11 +1,11 @@
 import { describe, expect, it, vi } from 'vitest';
 import { CatsService } from './cats';
-import { CatsModel } from '../models/cats';
+import { CatsRepository } from '../repositories/cats';
 import { Bull } from '../clients/bull';
 import { Postgres } from '../clients/postgres';
 import { Logger } from '../clients/logger';
 import { Redis } from '../clients/redis';
-import { Cat } from '../models/types';
+import { CatDBItem } from '../models';
 import { Job } from 'bullmq';
 import { AppError } from '../error/AppError';
 
@@ -23,7 +23,7 @@ vi.mock('../clients/bull', () => {
         })),
     };
 });
-vi.mock('../models/cats');
+vi.mock('../repositories/cats');
 
 describe('Test CatsService', () => {
     const logger = new Logger();
@@ -32,14 +32,14 @@ describe('Test CatsService', () => {
     const redis = new Redis(logger);
 
     const bull = new Bull(redis, logger);
-    const catsModel = new CatsModel(db);
+    const catsRepository = new CatsRepository(db);
 
-    const catsService = new CatsService(catsModel, bull);
+    const catsService = new CatsService(catsRepository, bull);
 
     it('should fetch all the cats', async () => {
         expect.assertions(2);
 
-        vi.spyOn(catsModel, 'getAll').mockImplementation(async (...args) => {
+        vi.spyOn(catsRepository, 'getAll').mockImplementation(async (...args) => {
             expect(args).toMatchSnapshot();
             return [];
         });
@@ -51,9 +51,9 @@ describe('Test CatsService', () => {
     it('should fetch a single cat and pet it', async () => {
         expect.assertions(3);
 
-        vi.spyOn(catsModel, 'getById').mockImplementationOnce(async (...args) => {
+        vi.spyOn(catsRepository, 'getById').mockImplementationOnce(async (...args) => {
             expect(args).toMatchSnapshot();
-            return Promise.resolve({ name: 'Jake' } as Cat);
+            return Promise.resolve({ name: 'Jake' } as CatDBItem);
         });
 
         vi.spyOn(bull.queues.catPetterQueue, 'add').mockImplementationOnce(async (...args) => {
@@ -68,7 +68,7 @@ describe('Test CatsService', () => {
     it("should fail fetching a single cat because it doesn't exist", async () => {
         expect.assertions(4);
 
-        vi.spyOn(catsModel, 'getById').mockImplementationOnce(async (...args) => {
+        vi.spyOn(catsRepository, 'getById').mockImplementationOnce(async (...args) => {
             expect(args).toMatchSnapshot();
             return Promise.resolve(undefined);
         });
