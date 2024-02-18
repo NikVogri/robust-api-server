@@ -107,6 +107,7 @@ exports[`Test cats routes > POST /cats - successfully create a cat 1`] = `
   "
                 INSERT INTO cats (name, date_of_birth, color)
                 VALUES ($1, $2, $3)
+                RETURNING *;
                 ",
   [
     "Kitty-kat",

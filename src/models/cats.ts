@@ -15,6 +15,7 @@ export class CatsModel extends Model<Cat> {
             `
                 INSERT INTO cats (name, date_of_birth, color)
                 VALUES ($1, $2, $3)
+                RETURNING *;
                 `,
             [createCatDto.name, createCatDto.dateOfBirth, createCatDto.color],
         );
