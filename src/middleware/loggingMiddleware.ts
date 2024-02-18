@@ -11,8 +11,7 @@ export const loggingMiddleware = (req: Request, res: Response, next: NextFunctio
         res.end = end;
         res.end(chunk, encoding);
 
-        // @ts-expect-error - TODO: fix Request type to include optional thrownError
-        // In case request has an additional 'thrownError' property, include it in the log.
+        // @ts-expect-error - in case request has an additional 'thrownError' property, include it in the log.
         logger.http(req, res, req.thrownError);
     };
 

@@ -6,7 +6,7 @@ export const withErrorHandling =
         try {
             await handler(req, res, next);
         } catch (error) {
-            // @ts-expect-error TODO: sort this to be a valid type
+            // @ts-expect-error - append error to request object to be used further down the pipeline
             req.thrownError = error;
 
             next(error);
