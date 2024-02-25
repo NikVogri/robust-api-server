@@ -7,6 +7,7 @@ import { Postgres } from './clients/postgres';
 import { container } from 'tsyringe';
 import { Bull } from './clients/bull';
 import { Redis } from './clients/redis';
+import { catPetterWorker } from './workers/catPetterWorker';
 
 declare global {
     namespace NodeJS {
@@ -33,7 +34,8 @@ declare global {
     const redis = container.resolve(Redis);
     await redis.testConnection();
 
-    container.resolve(Bull);
+    const bull = container.resolve(Bull);
+    bull.registerWorker('catPetterQueue', catPetterWorker, { concurrency: 30 });
 
     startApiServer();
 })();

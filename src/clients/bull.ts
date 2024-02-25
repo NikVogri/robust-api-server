@@ -1,6 +1,5 @@
-import { Queue, Worker } from 'bullmq';
+import { Job, Queue, Worker, WorkerOptions } from 'bullmq';
 import { Redis } from './redis';
-import { catPetterWorker } from '../workers/catPetterWorker';
 import { Logger } from './logger';
 import { singleton } from 'tsyringe';
 
@@ -15,20 +14,20 @@ export class Bull {
         private redis: Redis,
         private logger: Logger,
     ) {
-        this.queues = this.createQueues();
-        this.createWorkers();
-
-        this.logger.info('Successfully initiated Bull queues and workers');
-    }
-
-    private createQueues(): BullQueues {
-        return {
+        this.queues = {
             catPetterQueue: new Queue('catPetterQueue', { connection: this.redis.client }),
         };
+
+        this.logger.info('Successfully initiated Bull queues');
     }
 
-    private createWorkers() {
+    public registerWorker(
+        queue: QueueName,
+        handler: (j: Job) => Promise<boolean>,
+        opts: Omit<WorkerOptions, 'connection'>,
+    ) {
         // In most cases workers should be running on seperate threads than the one the API is on
-        new Worker('catPetterQueue', catPetterWorker, { connection: this.redis.client, concurrency: 30 });
+        new Worker(queue, handler, { connection: this.redis.client, ...opts });
+        this.logger.info(`Successfully registered new worker for queue "${queue}"`);
     }
 }

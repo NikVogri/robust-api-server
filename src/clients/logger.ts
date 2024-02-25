@@ -48,12 +48,12 @@ export class Logger {
         ];
     };
 
-    error(message: string, error: Error, metadata?: Record<string, unknown>) {
-        this.logger.error(message, AppError.toStringifiableObject(error), metadata);
+    error(message: string, error: Error) {
+        this.logger.error(message, AppError.toStringifiableObject(error));
     }
 
-    info(message: string, metadata?: Record<string, unknown>) {
-        this.logger.info(message, metadata);
+    info(message: string) {
+        this.logger.info(message);
     }
 
     http(req: Request, res: Response, error?: Error) {
