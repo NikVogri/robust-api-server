@@ -1,10 +1,11 @@
-import express, { Response } from 'express';
+import express from 'express';
 import { withErrorHandling } from '../middleware/withCatch';
 import { container } from 'tsyringe';
 import { withValidate } from '../middleware/withValidate';
-import { createCatSchema } from './cats.dto';
+import { CreateCatDto, createCatSchema } from './cats.dto';
 import { CatsService } from '../services/cats';
 import { Cat } from '../openapi/models';
+import { Response, Request } from '../models';
 
 const catsRouter = express.Router();
 
@@ -20,7 +21,7 @@ catsRouter.get(
 
 catsRouter.get(
     '/cats/:id',
-    withErrorHandling(async (req, res: Response<Cat>) => {
+    withErrorHandling(async (req: Request<{ id: string }>, res: Response<Cat>) => {
         const catsService = container.resolve(CatsService);
 
         const id = req.params.id;
@@ -33,7 +34,7 @@ catsRouter.get(
 catsRouter.post(
     '/cats',
     withValidate({ body: createCatSchema }),
-    withErrorHandling(async (req, res: Response<Cat>) => {
+    withErrorHandling(async (req: Request<object, CreateCatDto>, res: Response<Cat>) => {
         const catsService = container.resolve(CatsService);
 
         const cat = await catsService.createCat(req.body);

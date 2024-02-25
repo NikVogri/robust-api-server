@@ -1,14 +1,13 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction } from 'express';
+import { Request, Response } from '../models';
 
 export const withErrorHandling =
-    (handler: (req: Request, res: Response, next: NextFunction) => Promise<void>) =>
-    async (req: Request, res: Response, next: NextFunction) => {
+    <Req extends Request, Res extends Response>(handler: (req: Req, res: Res, next: NextFunction) => Promise<void>) =>
+    async (req: Req, res: Res, next: NextFunction) => {
         try {
             await handler(req, res, next);
         } catch (error) {
-            // @ts-expect-error - append error to request object to be used further down the pipeline
-            req.thrownError = error;
-
+            req.thrownError = error as Error;
             next(error);
         }
     };

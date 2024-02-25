@@ -12,8 +12,15 @@ declare global {
     namespace NodeJS {
         interface ProcessEnv {
             PORT?: string;
-            PG_DB_CONN_STR?: string;
+            PG_DB_CONNECTION_STR?: string;
             REDIS_DB_CONNECTION_STR?: string;
+        }
+    }
+    namespace Express {
+        export interface Request {
+            thrownError?: Error;
+            // Extend global request type with properties
+            // e.g. user?: {id: string;}
         }
     }
 }

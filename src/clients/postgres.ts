@@ -8,7 +8,7 @@ export class Postgres {
 
     constructor(private logger: Logger) {
         this.pool = new Pool({
-            connectionString: process.env.PG_DB_CONN_STR,
+            connectionString: process.env.PG_DB_CONNECTION_STR,
         });
     }
 

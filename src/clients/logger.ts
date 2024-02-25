@@ -56,12 +56,12 @@ export class Logger {
         this.logger.info(message, metadata);
     }
 
-    http(req: Request, res: Response, error?: AppError) {
+    http(req: Request, res: Response, error?: Error) {
         const log = this.buildHttpLog(req, res, error);
         this.logger.http(log);
     }
 
-    private buildHttpLog(req: Request, res: Response, error?: AppError): string {
+    private buildHttpLog(req: Request, res: Response, error?: unknown): string {
         return JSON.stringify({
             success: res.statusCode.toString().startsWith('2'), // success status codes are 2xx
             originalUrl: req.originalUrl,
@@ -84,11 +84,21 @@ export class Logger {
                 statusCode: res.statusCode,
                 // do not log resposes as they might be too large or contain GDPR data
             },
-            error: {
-                message: error?.message,
-                stack: error?.stack,
-                thrown: error?.thrownError ? AppError.toStringifiableObject(error.thrownError) : undefined,
-            },
+            error: this.buildErrorObject(error),
         });
+    }
+
+    private buildErrorObject(error?: unknown) {
+        if (!error || !(error instanceof Error)) return undefined;
+
+        const output: Record<string, unknown> = {
+            message: error?.message,
+        };
+
+        if (error instanceof AppError && error.thrownError) {
+            output['thrown'] = AppError.toStringifiableObject(error.thrownError);
+        }
+
+        return output;
     }
 }
