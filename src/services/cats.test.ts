@@ -28,11 +28,11 @@ vi.mock('../repositories/cats');
 describe('Test CatsService', () => {
     const logger = new Logger();
 
-    const db = new Postgres(logger);
+    const pg = new Postgres(logger);
     const redis = new Redis(logger);
 
     const bull = new Bull(redis, logger);
-    const catsRepository = new CatsRepository(db);
+    const catsRepository = new CatsRepository(pg);
 
     const catsService = new CatsService(catsRepository, bull);
 

@@ -6,12 +6,12 @@ import { CreateCatDto } from '../routes/cats.dto';
 
 @injectable()
 export class CatsRepository extends Repository<CatDBItem> {
-    constructor(db: Postgres) {
-        super('cats', db);
+    constructor(pg: Postgres) {
+        super('cats', pg);
     }
 
     async create(createCatDto: CreateCatDto): Promise<CatDBItem> {
-        const { rows } = await this.db.pool.query(
+        const { rows } = await this.pg.pool.query(
             `
                 INSERT INTO cats (name, date_of_birth, color)
                 VALUES ($1, $2, $3)

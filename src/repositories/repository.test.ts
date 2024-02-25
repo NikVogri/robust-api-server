@@ -15,21 +15,21 @@ vi.mock('../clients/postgres', () => {
 });
 
 class TestRepo extends Repository<{ id: string }> {
-    constructor(db: Postgres) {
-        super('table-name', db);
+    constructor(pg: Postgres) {
+        super('table-name', pg);
     }
 }
 
 describe('Test abstract Repository', () => {
     const logger = new Logger();
-    const db = new Postgres(logger);
+    const pg = new Postgres(logger);
 
-    const testRepo = new TestRepo(db);
+    const testRepo = new TestRepo(pg);
 
     it('should get all the records for table', async () => {
         expect.assertions(2);
 
-        vi.spyOn(db.pool, 'query').mockImplementationOnce(async (...args) => {
+        vi.spyOn(pg.pool, 'query').mockImplementationOnce(async (...args) => {
             expect(args).toMatchSnapshot();
             return Promise.resolve({
                 rows: [{ id: 1 }, { id: 2 }],
@@ -43,7 +43,7 @@ describe('Test abstract Repository', () => {
     it('should get records by id', async () => {
         expect.assertions(2);
 
-        vi.spyOn(db.pool, 'query').mockImplementationOnce(async (...args) => {
+        vi.spyOn(pg.pool, 'query').mockImplementationOnce(async (...args) => {
             expect(args).toMatchSnapshot();
             return Promise.resolve({
                 rows: [{ id: 1 }, { id: 2 }],
@@ -57,7 +57,7 @@ describe('Test abstract Repository', () => {
     it('should delete records by id', async () => {
         expect.assertions(2);
 
-        vi.spyOn(db.pool, 'query').mockImplementationOnce(async (...args) => {
+        vi.spyOn(pg.pool, 'query').mockImplementationOnce(async (...args) => {
             expect(args).toMatchSnapshot();
             return Promise.resolve();
         });
