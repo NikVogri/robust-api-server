@@ -1,11 +1,11 @@
-import { Request, Response } from 'express';
 import winston from 'winston';
 import { AppError } from '../error/AppError';
 import { singleton } from 'tsyringe';
+import { Request, Response } from '../models';
 
 @singleton()
 export class Logger {
-    private readonly logger: winston.Logger;
+    public readonly winston: winston.Logger;
 
     private readonly custom = {
         levels: {
@@ -26,7 +26,7 @@ export class Logger {
         winston.addColors(this.custom.colors);
         winston.remove(winston.transports.Console);
 
-        this.logger = winston.createLogger({
+        this.winston = winston.createLogger({
             transports: this.getTransports(),
             levels: this.custom.levels,
         });
@@ -49,16 +49,16 @@ export class Logger {
     };
 
     error(message: string, error: Error) {
-        this.logger.error(message, AppError.toStringifiableObject(error));
+        this.winston.error(message, AppError.toStringifiableObject(error));
     }
 
     info(message: string) {
-        this.logger.info(message);
+        this.winston.info(message);
     }
 
     http(req: Request, res: Response, error?: Error) {
         const log = this.buildHttpLog(req, res, error);
-        this.logger.http(log);
+        this.winston.http(log);
     }
 
     private buildHttpLog(req: Request, res: Response, error?: unknown): string {

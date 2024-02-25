@@ -1,0 +1,23 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Test Logger client > error logging 1`] = `
+[
+  "Oh, uh!",
+  {
+    "message": "Something went wrong",
+    "stack": "error-stack",
+  },
+]
+`;
+
+exports[`Test Logger client > http logging 1`] = `
+[
+  "{"success":false,"originalUrl":"/some/path/:id/items","path":"GET /some/path/:id/items","client":{"hostname":"hostname","userAgent":"test"},"req":{"query":{"page":"1","perPage":"10"},"params":{"id":"12345"},"body":["session"]},"res":{"statusCode":400},"error":{"message":"this is a message","thrown":{"stack":"thrown-error-stack","message":"Something went wrong"}}}",
+]
+`;
+
+exports[`Test Logger client > info logging 1`] = `
+[
+  "This is some info",
+]
+`;
