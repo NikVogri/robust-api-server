@@ -1,6 +1,6 @@
 import { Job, Queue, Worker, WorkerOptions } from 'bullmq';
-import { Redis } from './redis';
-import { Logger } from './logger';
+import { Redis } from '../database/redis';
+import { Logger } from '../logging/logger';
 import { singleton } from 'tsyringe';
 
 type QueueName = 'catPetterQueue';

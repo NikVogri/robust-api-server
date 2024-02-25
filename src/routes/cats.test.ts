@@ -3,12 +3,12 @@ import supertest from 'supertest';
 import { Server } from 'http';
 import { startApiServer } from '../server';
 import { CatsService } from '../services/cats';
-import { Bull } from '../clients/bull';
+import { Bull } from '../services/async/bull';
 import { CatsRepository } from '../repositories/cats';
 import { container } from 'tsyringe';
-import { Postgres } from '../clients/postgres';
-import { Logger } from '../clients/logger';
-import { Redis } from '../clients/redis';
+import { Postgres } from '../services/database/postgres';
+import { Logger } from '../services/logging/logger';
+import { Redis } from '../services/database/redis';
 import { CatDBItem } from '../models';
 
 vi.mock('../clients/logger');

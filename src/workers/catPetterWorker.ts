@@ -1,5 +1,5 @@
 import { Job } from 'bullmq';
-import { Logger } from '../clients/logger';
+import { Logger } from '../services/logging/logger';
 import { container } from 'tsyringe';
 
 export const catPetterWorker = async (job: Job) => {

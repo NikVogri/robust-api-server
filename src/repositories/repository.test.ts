@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { Postgres } from '../clients/postgres';
-import { Logger } from '../clients/logger';
+import { Postgres } from '../services/database/postgres';
+import { Logger } from '../services/logging/logger';
 import { Repository } from './repository';
 
 vi.mock('../clients/logger');

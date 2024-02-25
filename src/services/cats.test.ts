@@ -1,10 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
 import { CatsService } from './cats';
 import { CatsRepository } from '../repositories/cats';
-import { Bull } from '../clients/bull';
-import { Postgres } from '../clients/postgres';
-import { Logger } from '../clients/logger';
-import { Redis } from '../clients/redis';
+import { Bull } from './async/bull';
+import { Postgres } from './database/postgres';
+import { Logger } from './logging/logger';
+import { Redis } from './database/redis';
 import { CatDBItem } from '../models';
 import { Job } from 'bullmq';
 import { AppError } from '../error/AppError';

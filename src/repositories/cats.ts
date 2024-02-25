@@ -1,6 +1,6 @@
 import { Repository } from './repository';
 import { CatDBItem } from '../models';
-import { Postgres } from '../clients/postgres';
+import { Postgres } from '../services/database/postgres';
 import { injectable } from 'tsyringe';
 import { CreateCatDto } from '../routes/cats.dto';
 

@@ -3,10 +3,10 @@ import { config } from 'dotenv';
 config();
 
 import { startApiServer } from './server';
-import { Postgres } from './clients/postgres';
+import { Postgres } from './services/database/postgres';
 import { container } from 'tsyringe';
-import { Bull } from './clients/bull';
-import { Redis } from './clients/redis';
+import { Bull } from './services/async/bull';
+import { Redis } from './services/database/redis';
 import { catPetterWorker } from './workers/catPetterWorker';
 
 declare global {

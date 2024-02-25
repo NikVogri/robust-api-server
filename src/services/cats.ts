@@ -1,6 +1,6 @@
 import { CatDBItem } from '../models';
 import { AppError } from '../error/AppError';
-import { Bull } from '../clients/bull';
+import { Bull } from './async/bull';
 import { CatsRepository } from '../repositories/cats';
 import { injectable } from 'tsyringe';
 import { CreateCatDto } from '../routes/cats.dto';

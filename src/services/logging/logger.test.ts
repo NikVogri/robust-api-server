@@ -1,8 +1,8 @@
 import { describe, expect, test, vi } from 'vitest';
-import { Logger } from '../clients/logger';
+import { Logger } from './logger';
 import winston from 'winston';
-import { Request, Response } from '../models';
-import { AppError } from '../error/AppError';
+import { Request, Response } from '../../models';
+import { AppError } from '../../error/AppError';
 
 describe('Test Logger client', () => {
     const logger = new Logger();

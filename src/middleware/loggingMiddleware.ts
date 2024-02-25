@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { Logger } from '../clients/logger';
+import { Logger } from '../services/logging/logger';
 import { container } from 'tsyringe';
 
 export const loggingMiddleware = (req: Request, res: Response, next: NextFunction) => {

@@ -2,7 +2,7 @@ import express, { Response } from 'express';
 import { catsRouter } from './routes/cats';
 import { errorMiddleware } from './middleware/errorMiddleware';
 import { loggingMiddleware } from './middleware/loggingMiddleware';
-import { Logger } from './clients/logger';
+import { Logger } from './services/logging/logger';
 import { container } from 'tsyringe';
 
 export const startApiServer = () => {

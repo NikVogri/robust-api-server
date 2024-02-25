@@ -1,4 +1,4 @@
-import { Postgres } from '../clients/postgres';
+import { Postgres } from '../services/database/postgres';
 
 export abstract class Repository<T> {
     constructor(

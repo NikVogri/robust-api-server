@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { Logger } from '../clients/logger';
+import { Logger } from '../services/logging/logger';
 import { Job } from 'bullmq';
 import { catPetterWorker } from './catPetterWorker';
 import { container } from 'tsyringe';

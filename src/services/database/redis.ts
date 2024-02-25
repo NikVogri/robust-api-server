@@ -1,5 +1,5 @@
 import { Redis as IORedis } from 'ioredis';
-import { Logger } from './logger';
+import { Logger } from '../logging/logger';
 import { singleton } from 'tsyringe';
 
 @singleton()
