@@ -1,8 +1,8 @@
 import { describe, expect, test, vi } from 'vitest';
 import { Logger } from './logger';
 import winston from 'winston';
-import { Request, Response } from '../../models';
 import { AppError } from '../../error/AppError';
+import { getRequest, getResponse } from '../../../vitest.mock';
 
 describe('Test Logger client', () => {
     const logger = new Logger();
@@ -36,31 +36,20 @@ describe('Test Logger client', () => {
             return {} as winston.Logger;
         });
 
-        const request = {
-            originalUrl: '/some/path/:id/items',
-            url: '/some/path/:id/items',
-            path: '/some/path/:id/items',
-            method: 'GET',
-            hostname: 'hostname',
-            version: 'HTTP/1.1',
-            headers: {
-                ['user-agent']: 'test',
-            },
-            query: {
-                page: '1',
-                perPage: '10',
-            },
-            params: {
-                id: '12345',
-            },
-            body: {
-                session: '987654321',
-            },
-        } as unknown as Request;
+        const request = getRequest();
+        request.originalUrl = '/some/path/:id/items';
+        request.url = '/some/path/:id/items';
+        request.path = '/some/path/:id/items';
+        request.method = 'GET';
+        request.hostname = 'hostname';
+        request.httpVersion = 'HTTP/1.1';
+        request.headers = { ['user-agent']: 'test' };
+        request.query = { page: '1', perPage: '10' };
+        request.params = { id: '12345' };
+        request.body = { session: '987654321' };
 
-        const response = {
-            statusCode: 400,
-        } as Response;
+        const response = getResponse();
+        response.statusCode = 400;
 
         const thrownError = new Error('Something went wrong');
         thrownError.stack = 'thrown-error-stack';

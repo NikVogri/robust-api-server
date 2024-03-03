@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Test withValidate > should forward error when body validation fails 1`] = `"{"data":{"message":"Invalid payload","statusCode":400,"payload":{"errors":{"body":[{"code":"invalid_type","expected":"object","received":"undefined","path":[],"message":"Required"}]}}},"statusCode":400,"payload":{"errors":{"body":[{"code":"invalid_type","expected":"object","received":"undefined","path":[],"message":"Required"}]}}}"`;
+
+exports[`Test withValidate > should forward error when parameter validation fails 1`] = `"{"data":{"message":"Invalid payload","statusCode":400,"payload":{"errors":{"params":[{"code":"invalid_type","expected":"object","received":"undefined","path":[],"message":"Required"}]}}},"statusCode":400,"payload":{"errors":{"params":[{"code":"invalid_type","expected":"object","received":"undefined","path":[],"message":"Required"}]}}}"`;
+
+exports[`Test withValidate > should forward error when query validation fails 1`] = `"{"data":{"message":"Invalid payload","statusCode":400,"payload":{"errors":{"query":[{"code":"invalid_type","expected":"object","received":"undefined","path":[],"message":"Required"}]}}},"statusCode":400,"payload":{"errors":{"query":[{"code":"invalid_type","expected":"object","received":"undefined","path":[],"message":"Required"}]}}}"`;

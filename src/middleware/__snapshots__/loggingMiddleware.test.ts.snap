@@ -1,0 +1,5 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Test loggingMiddleware > should log the request before sending a response 1`] = `"/status"`;
+
+exports[`Test loggingMiddleware > should log the request before sending a response 2`] = `200`;

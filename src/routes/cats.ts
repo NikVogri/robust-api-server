@@ -1,5 +1,5 @@
 import express from 'express';
-import { withErrorHandling } from '../middleware/withCatch';
+import { withErrorHandling } from '../middleware/withErrorHandling';
 import { container } from 'tsyringe';
 import { withValidate } from '../middleware/withValidate';
 import { CreateCatDto, createCatSchema } from './cats.dto';

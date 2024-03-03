@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Test errorMiddleware > should send formatted response for AppError error 1`] = `
+[
+  400,
+]
+`;
+
+exports[`Test errorMiddleware > should send formatted response for AppError error 2`] = `
+[
+  {
+    "additional": "payload",
+    "message": "Some message",
+  },
+]
+`;
+
+exports[`Test errorMiddleware > should send formatted response for unexpected error 1`] = `
+[
+  500,
+]
+`;
+
+exports[`Test errorMiddleware > should send formatted response for unexpected error 2`] = `
+[
+  {
+    "message": "Something broke!",
+  },
+]
+`;
