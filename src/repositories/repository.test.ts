@@ -3,8 +3,8 @@ import { Postgres } from '../services/database/postgres';
 import { Logger } from '../services/logging/logger';
 import { Repository } from './repository';
 
-vi.mock('../clients/logger');
-vi.mock('../clients/postgres', () => {
+vi.mock('../services/logging/logger');
+vi.mock('../services/database/postgres', () => {
     return {
         Postgres: vi.fn(() => ({
             pool: {

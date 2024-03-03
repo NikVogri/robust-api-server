@@ -4,17 +4,13 @@ import { Job } from 'bullmq';
 import { catPetterWorker } from './catPetterWorker';
 import { container } from 'tsyringe';
 
-vi.mock('../clients/logger', () => {
+vi.mock('../services/logging/logger', () => {
     const Logger = vi.fn(() => ({
         info: vi.fn(),
     }));
 
     return { Logger };
 });
-vi.mock('../clients/postgres');
-vi.mock('../clients/redis');
-vi.mock('../clients/bull');
-vi.mock('../repositories/cats');
 
 describe('Test catPetterWorker', () => {
     container.registerInstance(Logger, new Logger());

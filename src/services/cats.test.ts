@@ -9,10 +9,10 @@ import { CatDBItem } from '../models';
 import { Job } from 'bullmq';
 import { AppError } from '../error/AppError';
 
-vi.mock('../clients/logger');
-vi.mock('../clients/postgres');
-vi.mock('../clients/redis');
-vi.mock('../clients/bull', () => {
+vi.mock('./logging/logger');
+vi.mock('./database/postgres');
+vi.mock('./database/redis');
+vi.mock('./async/bull', () => {
     return {
         Bull: vi.fn(() => ({
             queues: {

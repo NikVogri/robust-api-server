@@ -11,8 +11,8 @@ import { Logger } from '../services/logging/logger';
 import { Redis } from '../services/database/redis';
 import { CatDBItem } from '../models';
 
-vi.mock('../clients/logger');
-vi.mock('../clients/bull', () => {
+vi.mock('../services/logging/logger');
+vi.mock('../services/async/bull', () => {
     return {
         Bull: vi.fn(() => ({
             queues: {
@@ -23,8 +23,8 @@ vi.mock('../clients/bull', () => {
         })),
     };
 });
-vi.mock('../clients/redis');
-vi.mock('../clients/postgres', () => {
+vi.mock('../services/database/redis');
+vi.mock('../services/database/postgres', () => {
     return {
         Postgres: vi.fn(() => ({
             pool: {
