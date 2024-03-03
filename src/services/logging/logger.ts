@@ -75,9 +75,9 @@ export class Logger {
                 userAgent: req.headers['user-agent'],
             },
             req: {
-                query: Object.keys(req.query).length > 0 ? req.query : undefined,
-                params: Object.keys(req.params).length > 0 ? req.params : undefined,
-                body: Object.keys(req.body).length > 0 ? Object.keys(req.body) : undefined,
+                query: req.query && Object.keys(req.query).length > 0 ? req.query : undefined,
+                params: req.params && Object.keys(req.params).length > 0 ? req.params : undefined,
+                body: req.body && Object.keys(req.body).length > 0 ? Object.keys(req.body) : undefined,
                 // do not log request inputs as they might be too large or contain GDPR data
             },
             res: {

@@ -23,6 +23,11 @@ export const startApiServer = () => {
         res.status(200).send({ time: Date.now() });
     });
 
+    // Unsupported routes handler
+    app.all('*', (_, res) => {
+        res.status(404).send();
+    });
+
     // Set error middleware
     app.use(errorMiddleware);
 
