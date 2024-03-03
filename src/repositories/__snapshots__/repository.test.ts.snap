@@ -42,3 +42,27 @@ exports[`Test abstract Repository > should get records by id 2`] = `
   "id": 1,
 }
 `;
+
+exports[`Test abstract Repository > should should throw an app error if delete record by id query failed 1`] = `
+[
+  "DELETE FROM table-name WHERE id = $1",
+  [
+    "1",
+  ],
+]
+`;
+
+exports[`Test abstract Repository > should should throw an app error if get all the records query failed 1`] = `
+[
+  "SELECT * FROM table-name",
+]
+`;
+
+exports[`Test abstract Repository > should should throw an app error if getting a record by id query failed 1`] = `
+[
+  "SELECT * FROM table-name WHERE id = $1",
+  [
+    "1",
+  ],
+]
+`;

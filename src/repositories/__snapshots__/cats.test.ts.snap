@@ -1,0 +1,37 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Test CatsRepository > should create a new cat record 1`] = `
+[
+  "
+                INSERT INTO cats (name, date_of_birth, color)
+                VALUES ($1, $2, $3)
+                RETURNING *;
+                ",
+  [
+    "Kiki",
+    "2010-09-05",
+    "gray",
+  ],
+]
+`;
+
+exports[`Test CatsRepository > should create a new cat record 2`] = `
+{
+  "id": 1,
+}
+`;
+
+exports[`Test CatsRepository > should throw an app error when unable to create a cat 1`] = `
+[
+  "
+                INSERT INTO cats (name, date_of_birth, color)
+                VALUES ($1, $2, $3)
+                RETURNING *;
+                ",
+  [
+    "Kiki",
+    "2010-09-05",
+    "gray",
+  ],
+]
+`;
