@@ -10,6 +10,7 @@ exports[`Test errorMiddleware > should send formatted response for AppError erro
 [
   {
     "additional": "payload",
+    "errorCode": "error-code",
     "message": "Some message",
   },
 ]
@@ -24,6 +25,7 @@ exports[`Test errorMiddleware > should send formatted response for unexpected er
 exports[`Test errorMiddleware > should send formatted response for unexpected error 2`] = `
 [
   {
+    "errorCode": undefined,
     "message": "Something broke!",
   },
 ]

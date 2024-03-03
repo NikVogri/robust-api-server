@@ -3,6 +3,31 @@ import { AppError } from '../../error/AppError';
 import { singleton } from 'tsyringe';
 import { Request, Response } from '../../types';
 
+export interface HttpLog {
+    success: boolean;
+    originalUrl: string;
+    path: string;
+    client: {
+        ip?: string;
+        hostname: string;
+        version: string;
+        userAgent?: string;
+    };
+    req: {
+        query?: object;
+        params?: object;
+        body?: string[];
+    };
+    res: {
+        statusCode: number;
+    };
+    error?: {
+        message: string;
+        errorCode?: string;
+        thrownError?: Record<string, unknown>;
+    };
+}
+
 @singleton()
 export class Logger {
     public readonly winston: winston.Logger;
@@ -85,20 +110,23 @@ export class Logger {
                 // do not log resposes as they might be too large or contain GDPR data
             },
             error: this.buildErrorObject(error),
-        });
+        } satisfies HttpLog);
     }
 
-    private buildErrorObject(error?: unknown) {
+    private buildErrorObject(error?: unknown): HttpLog['error'] {
         if (!error || !(error instanceof Error)) return undefined;
 
-        const output: Record<string, unknown> = {
-            message: error?.message,
-        };
-
-        if (error instanceof AppError && error.thrownError) {
-            output['thrown'] = AppError.toStringifiableObject(error.thrownError);
+        if (error instanceof AppError) {
+            return {
+                message: error.message,
+                errorCode: error.errorCode,
+                thrownError: error.thrownError ? AppError.toStringifiableObject(error.thrownError) : undefined,
+            };
         }
 
-        return output;
+        return {
+            message: error.message,
+            thrownError: AppError.toStringifiableObject(error),
+        };
     }
 }

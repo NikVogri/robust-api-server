@@ -1,6 +1,7 @@
 interface IAppError {
     message: string;
     statusCode: number;
+    errorCode?: string;
     thrownError?: Error | unknown;
     payload?: Record<string, unknown>;
 }
@@ -8,6 +9,7 @@ interface IAppError {
 export class AppError extends Error {
     thrownError?: Error | unknown;
     statusCode: number;
+    errorCode?: string;
     payload?: Record<string, unknown>;
 
     constructor(public data: IAppError) {
@@ -15,6 +17,7 @@ export class AppError extends Error {
 
         this.thrownError = data.thrownError;
         this.statusCode = data.statusCode;
+        this.errorCode = data.errorCode;
         this.payload = data.payload;
     }
 

@@ -33,6 +33,7 @@ describe('Test errorMiddleware', () => {
         const error = new AppError({
             message: 'Some message',
             statusCode: 400,
+            errorCode: 'error-code',
             payload: {
                 additional: 'payload',
             },
