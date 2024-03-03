@@ -1,12 +1,12 @@
 interface IAppError {
     message: string;
     statusCode: number;
-    thrownError?: Error;
+    thrownError?: Error | unknown;
     payload?: Record<string, unknown>;
 }
 
 export class AppError extends Error {
-    thrownError: Error | undefined;
+    thrownError?: Error | unknown;
     statusCode: number;
     payload?: Record<string, unknown>;
 
@@ -18,7 +18,9 @@ export class AppError extends Error {
         this.payload = data.payload;
     }
 
-    static toStringifiableObject(error: Error) {
+    static toStringifiableObject(error: Error | unknown) {
+        if (!(error instanceof Error)) return {};
+
         const err: Record<string, unknown> = {};
 
         Object.getOwnPropertyNames(error).forEach((prop) => {
