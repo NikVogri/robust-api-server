@@ -5,7 +5,7 @@ import { withValidate } from '../middleware/withValidate';
 import { CreateCatDto, createCatSchema } from './cats.dto';
 import { CatsService } from '../services/cats';
 import { Cat } from '../openapi/models';
-import { Response, Request } from '../models';
+import { Response, Request } from '../types';
 
 const catsRouter = express.Router();
 

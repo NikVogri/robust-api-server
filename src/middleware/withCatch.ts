@@ -1,5 +1,5 @@
 import { NextFunction } from 'express';
-import { Request, Response } from '../models';
+import { Request, Response } from '../types';
 
 export const withErrorHandling =
     <Req extends Request, Res extends Response>(handler: (req: Req, res: Res, next: NextFunction) => Promise<void>) =>

@@ -1,7 +1,7 @@
 import winston from 'winston';
 import { AppError } from '../../error/AppError';
 import { singleton } from 'tsyringe';
-import { Request, Response } from '../../models';
+import { Request, Response } from '../../types';
 
 @singleton()
 export class Logger {
