@@ -1,0 +1,10 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Test AppError > should create a stringifiable error object 1`] = `
+{
+  "message": "Some error",
+  "stack": "some-stack",
+}
+`;
+
+exports[`Test AppError > should should initialize payload as expected 1`] = `"{"data":{"message":"error message","statusCode":400,"payload":{"some":"property"},"thrownError":{}},"thrownError":{},"statusCode":400,"payload":{"some":"property"}}"`;
