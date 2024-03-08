@@ -13,7 +13,7 @@ export abstract class Repository<T> {
             return rows;
         } catch (err) {
             throw new AppError({
-                message: 'Unable to get all cats',
+                message: `Unable to get all records from ${this.table} table`,
                 statusCode: 500,
                 thrownError: err,
             });
@@ -26,7 +26,7 @@ export abstract class Repository<T> {
             return rows[0];
         } catch (err) {
             throw new AppError({
-                message: 'Unable to get cat by id',
+                message: `Unable to get record by id from ${this.table} table`,
                 statusCode: 500,
                 thrownError: err,
             });
@@ -38,7 +38,7 @@ export abstract class Repository<T> {
             await this.pg.pool.query(`DELETE FROM ${this.table} WHERE id = $1`, [id]);
         } catch (err) {
             throw new AppError({
-                message: 'Unable to delete cat',
+                message: `Unable to delete a record from ${this.table} table`,
                 statusCode: 500,
                 thrownError: err,
             });
